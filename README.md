@@ -1,124 +1,73 @@
 # Project Management System
 
-A full-stack **Project Management System** built using **React, Node.js, Express, PostgreSQL, and Prisma ORM**. The application allows users to securely manage projects and tasks with JWT authentication, dashboard analytics, search, and filtering.
+A modern full-stack **Project Management System** built with **React**, **Node.js**, **Express.js**, **PostgreSQL**, and **Prisma ORM**. The application enables users to securely manage projects and tasks through an intuitive interface while following a clean MVC architecture and industry-standard security practices.
 
-The project was intentionally designed with a **simple MVC architecture** so every part of the codebase is easy to understand and explain during technical interviews.
+Designed with simplicity and maintainability in mind, this project demonstrates core full-stack development concepts including authentication, RESTful APIs, database relationships, and responsive frontend development.
 
 ---
 
-# Features
+## ✨ Features
 
-## User Authentication
-
-* User Registration
-* User Login
-* User Logout
+* Secure user authentication with JWT
 * Password hashing using bcrypt
-* JWT-based authentication
-* Protected API routes
-
-## Project Management
-
-* Create Project
-* View All Projects
-* View Single Project
-* Update Project
-* Delete Project
-* Search Projects
-* Filter Projects by Status
-
-## Task Management
-
-* Create Task
-* View Tasks
-* Update Task
-* Delete Task
-* Search Tasks
-* Filter by Status
-* Filter by Priority
-
-## Dashboard
-
-Displays project statistics using Prisma aggregation:
-
-* Total Projects
-* Total Tasks
-* Completed Tasks
-* Pending Tasks
-* Projects In Progress
-
-The dashboard uses Prisma's `count()` and `groupBy()` methods instead of counting records in JavaScript.
+* Complete Project CRUD operations
+* Complete Task CRUD operations
+* Dashboard with real-time project and task statistics
+* Search and filter functionality
+* Protected routes for authenticated users
+* Form validation on both client and server
+* Responsive user interface
+* Centralized error handling
+* Rate limiting for authentication endpoints
 
 ---
 
-# Tech Stack
+## 🛠️ Tech Stack
 
-## Frontend
+### Frontend
 
 * React (Vite)
 * React Router
 * Context API
 * Axios
-* CSS (Flexbox & Grid)
+* CSS3 (Flexbox & Grid)
 
-## Backend
+### Backend
 
 * Node.js
-* Express.js
+* Express.js (ES Modules)
 * Prisma ORM
 * PostgreSQL
-* JWT Authentication
+* JSON Web Tokens (JWT)
 * bcrypt
 * express-validator
 * express-rate-limit
 
 ---
 
-# Project Structure
+## 📂 Project Structure
 
-```
-Project-Management-System
-│
-├── backend
-│   ├── prisma
-│   │   ├── schema.prisma
-│   │   └── migrations
-│   │
-│   ├── src
-│   │
-│   ├── config
-│   │     prisma.js
-│   │
-│   ├── controllers
-│   │     authController.js
-│   │     projectController.js
-│   │     taskController.js
-│   │
-│   ├── middleware
-│   │     auth.js
-│   │     errorHandler.js
-│   │     rateLimiter.js
-│   │
-│   ├── routes
-│   │     authRoutes.js
-│   │     projectRoutes.js
-│   │     taskRoutes.js
-│   │
-│   ├── validators
-│   │
-│   ├── server.js
+```text
+project-management-system/
+├── backend/
+│   ├── prisma/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   ├── validators/
+│   │   └── server.js
 │   ├── package.json
 │   └── .env.example
 │
-├── frontend
-│   ├── src
-│   │
-│   ├── api
-│   ├── components
-│   ├── context
-│   ├── pages
-│   │
-│   ├── App.jsx
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   └── App.jsx
 │   └── package.json
 │
 └── README.md
@@ -126,342 +75,40 @@ Project-Management-System
 
 ---
 
-# Database Design
+## 🚀 Getting Started
 
-The application contains three main tables.
+### Prerequisites
 
-## User
+* Node.js (v18+)
+* PostgreSQL
+* npm
 
-Stores application users.
-
-| Field         | Type            |
-| ------------- | --------------- |
-| id            | Integer         |
-| full_name     | String          |
-| email         | String (Unique) |
-| password_hash | String          |
-| created_at    | DateTime        |
-
-Relationship:
-
-```
-One User
-     │
-     └──────► Many Projects
-```
-
----
-
-## Project
-
-Stores projects created by users.
-
-| Field       | Type     |
-| ----------- | -------- |
-| id          | Integer  |
-| user_id     | Integer  |
-| name        | String   |
-| description | String   |
-| status      | Enum     |
-| start_date  | Date     |
-| end_date    | Date     |
-| created_at  | DateTime |
-
-Relationship:
-
-```
-Project
-   │
-   └────► Many Tasks
-```
-
----
-
-## Task
-
-Stores tasks belonging to projects.
-
-| Field       | Type     |
-| ----------- | -------- |
-| id          | Integer  |
-| project_id  | Integer  |
-| name        | String   |
-| description | String   |
-| priority    | Enum     |
-| status      | Enum     |
-| due_date    | Date     |
-| created_at  | DateTime |
-
----
-
-# Entity Relationship
-
-```
-User
-│
-├── id
-├── full_name
-├── email
-└── password_hash
-        │
-        │ 1
-        │
-        ▼
-     Project
-        │
-        ├── id
-        ├── name
-        ├── status
-        └── user_id
-              │
-              │ 1
-              ▼
-            Task
-            │
-            ├── id
-            ├── name
-            ├── priority
-            ├── status
-            └── project_id
-```
-
----
-
-# Authentication Flow
-
-```
-Register
-     │
-     ▼
-Password hashed using bcrypt
-     │
-     ▼
-Stored in PostgreSQL
-```
-
-```
-Login
-     │
-     ▼
-Email + Password
-     │
-     ▼
-bcrypt.compare()
-     │
-     ▼
-JWT Token Generated
-     │
-     ▼
-Client Stores Token
-     │
-     ▼
-Token Sent in Authorization Header
-     │
-     ▼
-Protected Routes Verified
-```
-
----
-
-# Dashboard Analytics
-
-The dashboard retrieves statistics directly from the database using Prisma aggregates.
-
-* Total Projects
-* Total Tasks
-* Completed Tasks
-* Pending Tasks
-* Projects In Progress
-
-This approach is more efficient because counting is performed by PostgreSQL instead of loading all records into memory.
-
----
-
-# Search & Filtering
-
-Projects support:
-
-* Search by Name
-* Filter by Status
-
-Example:
-
-```
-GET /api/projects?search=website&status=IN_PROGRESS
-```
-
-Tasks support:
-
-* Search
-* Status Filter
-* Priority Filter
-
-Example:
-
-```
-GET /api/tasks?search=login&status=PENDING&priority=HIGH
-```
-
----
-
-# Security Features
-
-The application includes several security measures.
-
-### Password Hashing
-
-Passwords are hashed using **bcrypt** with a cost factor of **10** before storing them in the database.
-
----
-
-### JWT Authentication
-
-All project and task APIs require a valid JWT access token.
-
----
-
-### Request Validation
-
-Incoming request data is validated using **express-validator**.
-
-Validation includes:
-
-* Required fields
-* Email format
-* Enum validation
-* Date validation
-
----
-
-### Rate Limiting
-
-Authentication routes are protected with **express-rate-limit**.
-
-```
-Maximum:
-5 Requests
-
-Time Window:
-15 Minutes
-```
-
-This helps reduce brute-force login attempts.
-
----
-
-### SQL Injection Protection
-
-The application uses Prisma ORM.
-
-Prisma automatically parameterizes queries, preventing SQL injection attacks without requiring manual escaping.
-
----
-
-### Password Protection
-
-The `password_hash` field is never returned in API responses.
-
-Prisma `select` statements explicitly exclude it.
-
----
-
-### Centralized Error Handling
-
-Every error passes through a single middleware.
-
-All errors follow the same JSON format.
-
-```json
-{
-  "error": "Error message"
-}
-```
-
----
-
-# API Endpoints
-
-## Authentication
-
-| Method | Endpoint           |
-| ------ | ------------------ |
-| POST   | /api/auth/register |
-| POST   | /api/auth/login    |
-| POST   | /api/auth/logout   |
-
----
-
-## Projects
-
-| Method | Endpoint          |
-| ------ | ----------------- |
-| GET    | /api/projects     |
-| POST   | /api/projects     |
-| GET    | /api/projects/:id |
-| PUT    | /api/projects/:id |
-| DELETE | /api/projects/:id |
-
----
-
-## Tasks
-
-| Method | Endpoint       |
-| ------ | -------------- |
-| GET    | /api/tasks     |
-| POST   | /api/tasks     |
-| GET    | /api/tasks/:id |
-| PUT    | /api/tasks/:id |
-| DELETE | /api/tasks/:id |
-
----
-
-## Dashboard
-
-| Method | Endpoint       |
-| ------ | -------------- |
-| GET    | /api/dashboard |
-
----
-
-# Installation
-
-## 1. Clone Repository
+### Clone the Repository
 
 ```bash
-git clone <repository-url>
-
-cd Project-Management-System
+git clone https://github.com/Mahesh-xr/project-management-system.git
+cd project-management-system
 ```
 
----
-
-## 2. Backend Setup
+### Backend Setup
 
 ```bash
 cd backend
-
 npm install
 ```
 
-Create a `.env` file.
+Create a `.env` file using `.env.example`.
 
 ```env
 DATABASE_URL="postgresql://username:password@localhost:5432/project_management"
-
-JWT_SECRET=your_secret_key
-
+JWT_SECRET="your_secret_key"
 PORT=5000
 ```
 
-Run Prisma migrations.
+Run Prisma migrations and generate the client.
 
 ```bash
 npx prisma migrate dev
-```
-
-Generate Prisma Client.
-
-```bash
 npx prisma generate
 ```
 
@@ -471,60 +118,77 @@ Start the backend server.
 npm run dev
 ```
 
----
-
-## 3. Frontend Setup
+### Frontend Setup
 
 ```bash
 cd frontend
-
 npm install
-
 npm run dev
 ```
 
 ---
 
-# Future Improvements
+## 🔐 Security
 
-* Refresh Tokens
-* File Attachments
-* User Profile Management
-* Team Collaboration
-* Comments on Tasks
-* Email Notifications
-* Activity Logs
-* Dark Mode
-* Task Deadlines with Notifications
+* JWT-based Authentication
+* Password Hashing with bcrypt
+* Request Validation using express-validator
+* Rate Limiting for Authentication APIs
+* Protected API Routes
+* Prisma ORM (Parameterized Queries)
+* Centralized Error Handling
 
 ---
 
-# Learning Objectives
+## 📡 API Overview
 
-This project demonstrates practical knowledge of:
-
-* React fundamentals
-* React Router
-* Context API
-* REST API development
-* Express.js
-* PostgreSQL
-* Prisma ORM
-* JWT Authentication
-* Password Hashing
-* Route Protection
-* CRUD Operations
-* MVC Architecture
-* Search & Filtering
-* Prisma Aggregation
-* Secure Backend Development
+| Method | Endpoint             | Description           |
+| :----- | :------------------- | :-------------------- |
+| POST   | `/api/auth/register` | Register a new user   |
+| POST   | `/api/auth/login`    | Authenticate user     |
+| POST   | `/api/auth/logout`   | Logout user           |
+| GET    | `/api/projects`      | Retrieve all projects |
+| POST   | `/api/projects`      | Create a project      |
+| PUT    | `/api/projects/:id`  | Update a project      |
+| DELETE | `/api/projects/:id`  | Delete a project      |
+| GET    | `/api/tasks`         | Retrieve all tasks    |
+| POST   | `/api/tasks`         | Create a task         |
+| PUT    | `/api/tasks/:id`     | Update a task         |
+| DELETE | `/api/tasks/:id`     | Delete a task         |
+| GET    | `/api/dashboard`     | Dashboard analytics   |
 
 ---
 
-# Author
+## 📈 Key Highlights
+
+* Clean MVC architecture
+* Native ES Modules (ESM)
+* Relational database design with Prisma ORM
+* Secure authentication and authorization
+* Search and filtering using Prisma queries
+* Dashboard analytics using Prisma aggregations
+* Responsive and user-friendly interface
+
+---
+
+## 🌱 Future Enhancements
+
+* Team collaboration
+* File attachments
+* Email notifications
+* Activity tracking
+* Refresh token authentication
+* Dark mode support
+
+---
+
+## 👨‍💻 Author
 
 **Maheshkumar K**
 
 Final Year B.E. Computer Science and Engineering
-
 Rajalakshmi Institute of Technology
+
+---
+
+⭐ If you found this project helpful, consider giving it a star on GitHub.
