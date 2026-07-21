@@ -23,7 +23,14 @@ const PORT = process.env.PORT || 5000;
 
 // Enable CORS (Cross-Origin Resource Sharing)
 // Allows frontend running on different port (Vite on 5173) to communicate with API
-app.use(cors());
+
+app.use(
+  cors({
+    origin: "https://ismo-task-tracker.netlify.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Parse incoming JSON requests body
 app.use(express.json());
