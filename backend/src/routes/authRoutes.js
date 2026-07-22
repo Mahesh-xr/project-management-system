@@ -8,7 +8,7 @@ const router = Router();
 
 // POST /api/auth/register
 // Applies rate limiting and validation checks before invoking the registration controller.
-router.post('/register', authRateLimiter, registerValidator, register);
+router.post('/register', registerValidator, register);
 
 // POST /api/auth/login
 // Applies rate limiting and validation checks before checking credentials.

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create a centralized Axios HTTP client instance
 const axiosClient = axios.create({
-  baseURL: 'https://project-management-system-1u4l.onrender.com/api', // Points to Express backend server
+  baseURL: import.meta.env.VITE_BASE_URL, // Points to Express backend server
   headers: {
     'Content-Type': 'application/json'
   }

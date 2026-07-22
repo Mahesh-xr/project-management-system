@@ -26,10 +26,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://ismo-task-tracker.netlify.app",
-    ],
+    origin: process.env.CLIENT_URL?.split(',') || ['http://localhost:5173'],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })

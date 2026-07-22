@@ -41,6 +41,7 @@ export async function register(req, res, next) {
       user
     });
   } catch (error) {
+    console.log('Error during user registration:', error);
     next(error);
   }
 }

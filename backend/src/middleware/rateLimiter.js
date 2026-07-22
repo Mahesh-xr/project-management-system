@@ -4,8 +4,8 @@ import rateLimit from 'express-rate-limit';
 // Limits clients to 5 authentication requests (login/register) per 15 minutes.
 // This prevents brute-force password guessing and server denial-of-service.
 const authRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes window
-  max: 5,                   // Limit each IP to 5 requests per window
+  windowMs: 1 * 60 * 1000, // 15 minutes window
+  max: 300,                   // Limit each IP to 5 requests per window
   message: {
     error: 'Too many authentication attempts. Please try again after 15 minutes.'
   },
